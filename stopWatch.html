@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>stop watch</title>
+    <style>
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            outline: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f7f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        #time {
+            width: 70%;
+            text-align: center;
+            padding: 40px;
+            background-color: #f3e1e1;
+            margin: 10px;
+            font-weight: 600;
+            text-shadow: 0 0 3px red;
+            font-size: 8.5rem;
+            box-shadow: 0 0 5px rgb(190, 96, 96), 0 0 45px rgb(190, 96, 96);
+            color: rgb(234, 26, 26);
+            border-radius: 19px;
+            letter-spacing: .1em;
+            font-family: sans-serif;
+        }
+
+        .btn {
+            width: 100%;
+            text-align: center;
+        }
+
+        button[disabled] {
+            opacity: 0.6;
+            cursor: no-drop;
+        }
+
+        button {
+            margin: 90px 52px;
+            padding: 41px;
+            color: #fff;
+            background: rgb(224, 71, 15);
+            width: 16%;
+            border: none;
+            font-weight: 600;
+            font-size: 42px;
+            font-family: sans-serif;
+            border-radius: 100px;
+            cursor: pointer;
+            box-shadow: 0 0 5px red, 0 0 10px red;
+            transition: 600ms ease-in;
+        }
+
+        button:hover {
+            background: rgb(151, 53, 17);
+        }
+        /*
+        @media all and (max-width: 340px) {
+            body {
+                height: 100vh;
+            }
+
+            #time {
+                width: 92%;
+                padding: 20px;
+                text-align: center;
+                margin: 10px;
+                font-size: 2.5rem;
+            }
+
+            button {
+                margin: 37px 27px;
+                padding: 10px;
+                width: 15.5%;
+                border-radius: 5%;
+                border: none;
+                font-weight: 600;
+                font-size: 13px;
+            }
+        } */
+
+        @media all and (max-width: 340px) {
+        body {
+            height: auto;
+        }
+
+        #time {
+            width: 92%;
+            padding: 20px;
+            text-align: center;
+            margin: 10px;
+            font-size: 2rem; /* Adjust the font size for smaller screens */
+        }
+
+        .btn {
+            flex-direction: column; /* Stack buttons vertically on smaller screens */
+            align-items: center; /* Center-align buttons */
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px;
+            width: 70%; /* Adjust button width for better spacing on smaller screens */
+            border-radius: 5px; /* Adjust border radius for a cleaner look */
+            font-weight: 600;
+            font-size: 14px; /* Adjust font size for smaller screens */
+        }
+    }
+
+    </style>
+</head>
+<body>
+
+    <div id="time">00:00:00</div>
+
+    <div class="btn">
+        <button title="reset" id="reset">Reset</button>
+        <button title="stop" id="stop">Stop</button>
+        <button title="start" id="start">Start</button>
+    </div>
+
+    <script>
+
+        const time = document.getElementById('time');
+
+        const reset = document.getElementById('reset');
+
+        const stop1 = document.getElementById('stop');
+
+        const start = document.getElementById('start');
+
+        let startTime = 0;
+
+        let elapseTime = 0;
+
+        let timeInterval;
+
+        start.addEventListener("click", () => {
+            console.log('start');
+            startTime = Date.now() - elapseTime;
+            timeInterval = setInterval(() => {
+                elapseTime = Date.now() - startTime;
+                time.textContent = formatTime(elapseTime);
+            }, 10);
+            start.disabled = true;
+            stop1.disabled = false;
+            reset.disabled = false;
+        });
+
+        const formatTime = (elapseTime) => {
+            const minSec = Math.floor((elapseTime % 1000) / 10); 
+            const sec = Math.floor((elapseTime % (1000 * 60)) / 1000);
+            const min = Math.floor((elapseTime % (1000 * 60 * 60)) / (1000 * 60));
+            const hour = Math.floor(elapseTime / (1000 * 60 * 60));
+            return (hour < 10 ? "0"+ hour : hour) + ":" + (min < 10 ? "0"+ min : min) + ":" + (sec  < 10 ? "0"+ sec : sec) + "." + (minSec < 10 ? "0" + minSec : minSec);
+        };
+
+        stop1.addEventListener("click", () => {
+            console.log('stop')
+            clearInterval(timeInterval);
+            start.disabled = false;
+            stop1.disabled = true;
+            reset.disabled = false;
+        });
+
+        reset.addEventListener("click", () => {
+            console.log('reset')
+            clearInterval(timeInterval);
+            elapseTime = 0;
+            time.textContent = '00:00:00';
+            reset.disabled = true;
+            stop1.disabled = true;
+            start.disabled = false;
+        });
+
+    </script>
+    
+</body>
+</html>
