@@ -32,7 +32,7 @@
             margin: 10px;
             font-weight: 600;
             text-shadow: 0 0 3px red;
-            font-size: 8.5rem;
+            font-size: 10.5vmin;
             box-shadow: 0 0 5px rgb(190, 96, 96), 0 0 45px rgb(190, 96, 96);
             color: rgb(234, 26, 26);
             border-radius: 19px;
@@ -98,6 +98,37 @@
         }
     }
 
+    
+    @media all and (max-width: 1350px) {
+        body {
+            height: auto;
+        }
+
+        #time {
+            width: 92%;
+            padding: 35px;
+            text-align: center;
+            margin: 10px;
+            /*font-size: 3vmin;  Adjust the font size for smaller screens */
+        }
+
+        .btn {
+            flex-direction: column; /* Stack buttons vertically on smaller screens */
+            align-items: center; /* Center-align buttons */
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px;
+            width: 70%; /* Adjust button width for better spacing on smaller screens */
+            border-radius: 5px; /* Adjust border radius for a cleaner look */
+            font-weight: 600;
+            font-size: 14px; /* Adjust font size for smaller screens */
+        }
+    }
+
+
+
     </style>
 </head>
 <body>
@@ -156,6 +187,7 @@
 
         if (time.length > 1) {
             srart.textContent = 'Continue';
+
         }
 
         reset.addEventListener("click", () => {
